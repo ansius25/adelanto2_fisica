@@ -1,0 +1,653 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: radial-gradient(circle at 10% 20%, #0b1120, #04080f);
+  font-family: 'Inter', sans-serif;
+  color: #eef2ff;
+  line-height: 1.5;
+  min-height: 100vh;
+}
+
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+}
+
+/* HERO */
+.hero {
+  background: rgba(8, 18, 30, 0.65);
+  backdrop-filter: blur(6px);
+  border-radius: 2rem;
+  padding: 3rem 2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+  border: 1px solid rgba(72, 187, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+/* Cards más transparentes */
+.card {
+  background: rgba(8, 18, 30, 0.65);
+  backdrop-filter: blur(6px);
+  border-radius: 1.5rem;
+  border: 1px solid rgba(72, 187, 255, 0.25);
+  margin-bottom: 1.5rem;
+}
+
+/* Hero-sub más transparente */
+.hero-sub {
+  background: rgba(5, 12, 20, 0.6);
+  backdrop-filter: blur(6px);
+  border-radius: 80px;
+  padding: 0.5rem 0.8rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+/* Perfiles más transparentes */
+.perfil-card {
+  background: rgba(8, 18, 30, 0.65);
+  backdrop-filter: blur(6px);
+  border-radius: 1.2rem;
+  padding: 1rem;
+  text-align: center;
+  width: 220px;
+  border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+/* Fórmulas más transparentes */
+.formula-card {
+  background: rgba(5, 15, 30, 0.7);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid rgba(59, 130, 246, 0.5);
+}
+
+/* Simulador Python más transparente */
+.python-simulator {
+  background: rgba(5, 12, 25, 0.7);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: 1px solid #2b9eff;
+}
+
+/* Gráfico container */
+.grafico-container {
+  background: rgba(5, 12, 25, 0.65);
+  backdrop-filter: blur(4px);
+  border-radius: 1rem;
+  padding: 1rem;
+  margin: 0.8rem 0;
+}
+
+/* Footer más transparente */
+.footer-meta {
+  text-align: center;
+  font-size: 0.65rem;
+  color: #6c8db0;
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background: rgba(8, 18, 30, 0.6);
+  backdrop-filter: blur(6px);
+  border-radius: 1.5rem;
+  border-top: 1px solid rgba(72, 187, 255, 0.2);
+}
+
+/* Submenú etapas */
+.submenu-etapas {
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(4px);
+  border-radius: 60px;
+  padding: 0.3rem;
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Navegación tabs */
+.nav-tabs {
+  display: flex;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+  border-radius: 80px;
+  padding: 0.3rem;
+}
+
+/* Overlay del fondo más suave */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: -1;
+}
+
+/* Imagen de fondo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://st2.depositphotos.com/1722785/5364/i/450/depositphotos_53647955-stock-photo-blue-electromagnetic-field.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1.35;
+  z-index: -2;
+}
+
+.chip-lab {
+  background: rgba(0, 212, 255, 0.12);
+  padding: 0.3rem 1rem;
+  border-radius: 60px;
+  font-size: 0.8rem;
+  border: 1px solid rgba(0, 180, 255, 0.4);
+}
+
+.nav-tabs a {
+  color: #ccdeff;
+  text-decoration: none;
+  padding: 0.4rem 1.2rem;
+  border-radius: 40px;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: 0.2s;
+}
+
+.nav-tabs a:hover {
+  background: #2c6e9e;
+  color: white;
+}
+
+/* CARDS GENERALES */
+.card {
+  background: rgba(12, 22, 35, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 1.8rem;
+  border: 1px solid rgba(72, 187, 255, 0.2);
+  margin-bottom: 1.8rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 100, 200, 0.15);
+}
+
+.card-header {
+  border-left: 4px solid #2b9eff;
+  padding: 1.2rem 1.8rem 0.3rem 1.8rem;
+}
+
+.card-header h2 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #eef5ff;
+}
+
+.card-content {
+  padding: 0.2rem 1.8rem 1.2rem 1.8rem;
+}
+
+/* ESTILOS PARA INVESTIGACIÓN (textos, ecuaciones, bloques) */
+.card-content h3 {
+  color: #7bc9ff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.card-content p {
+  margin-bottom: 0.75rem;
+  color: #e2ecff;
+}
+
+.card-content strong {
+  color: #ffd966;
+  font-weight: 600;
+}
+
+/* Bloques de ecuación / código */
+.card-content div[style*="background: #07111e"] {
+  background: #07111e !important;
+  border-radius: 1.2rem;
+  padding: 0.6rem 1.2rem;
+  margin: 0.75rem 0;
+  font-family: 'JetBrains Mono', monospace;
+  border-left: 3px solid #2b9eff;
+  overflow-x: auto;
+}
+
+/* Estilo para pre/código */
+pre {
+  background: #03070f;
+  padding: 0.8rem;
+  border-radius: 0.8rem;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  color: #cbd5e6;
+  margin: 0.5rem 0;
+  border: 1px solid #2b9eff33;
+}
+
+/* SVG y gráficas incrustadas */
+.card-content svg {
+  display: block;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+/* SIMULADOR */
+.sim-core {
+  background: rgba(8, 16, 26, 0.7);
+  backdrop-filter: blur(16px);
+  border-radius: 1.8rem;
+  border: 1px solid rgba(0, 180, 255, 0.3);
+  overflow: hidden;
+}
+
+.sim-layout {
+  display: flex;
+}
+
+.toolbar-pro {
+  width: 105px;
+  background: rgba(0, 0, 0, 0.45);
+  backdrop-filter: blur(8px);
+  border-right: 1px solid rgba(59, 130, 246, 0.3);
+  padding: 1.2rem 0.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.tool-btn-pro {
+  background: rgba(20, 30, 50, 0.7);
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  border-radius: 1rem;
+  padding: 0.6rem 0.2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: #c7e2ff;
+}
+
+.tool-btn-pro.active {
+  background: linear-gradient(135deg, #1e5f8a, #0f3b5c);
+  border-color: #3b82f6;
+  box-shadow: 0 0 10px rgba(59,130,246,0.5);
+  color: white;
+}
+
+.tool-icon {
+  font-size: 26px;
+}
+
+.tool-label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.canvas-container {
+  flex: 1;
+  padding: 1rem;
+  position: relative;
+}
+
+canvas {
+  width: 100%;
+  background: radial-gradient(ellipse at 30% 40%, #0f1825, #050a12);
+  border-radius: 1.2rem;
+  box-shadow: inset 0 0 0 1px rgba(72,187,255,0.2), 0 8px 20px -8px black;
+  cursor: grab;
+  display: block;
+}
+
+canvas.dragging {
+  cursor: grabbing;
+}
+
+/* Control flotante de rotación */
+.rotation-control {
+  position: fixed;
+  background: rgba(10, 20, 35, 0.95);
+  backdrop-filter: blur(12px);
+  border-radius: 2rem;
+  padding: 0.5rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  border: 1px solid #2b9eff;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+}
+
+.rotation-control label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #aac9ff;
+}
+
+.rotation-control input {
+  width: 120px;
+  cursor: pointer;
+}
+
+.rotation-control span {
+  font-family: monospace;
+  font-size: 0.7rem;
+  background: #0a2a44;
+  padding: 0.2rem 0.5rem;
+  border-radius: 1rem;
+}
+
+.rotation-control button {
+  background: rgba(255,100,80,0.8);
+  border: none;
+  color: white;
+  border-radius: 2rem;
+  padding: 0.2rem 0.6rem;
+  cursor: pointer;
+}
+
+/* Panel inferior de controles */
+.control-panel {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid rgba(72, 187, 255, 0.3);
+  padding: 0.8rem 1.2rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.stats-grid {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.stat-card {
+  background: rgba(0, 15, 30, 0.7);
+  border-radius: 1.2rem;
+  padding: 0.3rem 1rem;
+  min-width: 100px;
+  text-align: center;
+  border: 1px solid rgba(59,130,246,0.3);
+}
+
+.stat-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #90b4e0;
+}
+
+.stat-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #e2f0ff;
+}
+
+.slider-group {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 2rem;
+  padding: 0.2rem 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #2c6e9e;
+}
+
+input[type="range"] {
+  width: 140px;
+  height: 4px;
+  background: #2c4c6e;
+  border-radius: 5px;
+  -webkit-appearance: none;
+}
+
+input[type="range"]:focus {
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #3b82f6;
+  cursor: pointer;
+  -webkit-appearance: none;
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #60a5fa;
+  transform: scale(1.2);
+}
+
+.badge-val {
+  font-family: monospace;
+  background: #031a2f;
+  padding: 2px 8px;
+  border-radius: 32px;
+  font-size: 0.7rem;
+  border: 1px solid #2b9eff;
+}
+
+.btn-primary, .btn-outline {
+  border-radius: 40px;
+  padding: 5px 16px;
+  font-weight: 600;
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary {
+  background: linear-gradient(95deg, #136b9c, #0a4468);
+  border: none;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: linear-gradient(95deg, #1a7fb8, #0f5580);
+  box-shadow: 0 2px 8px rgba(0,150,255,0.3);
+}
+
+.btn-outline {
+  background: rgba(0, 0, 0, 0.5);
+  border: 1px solid #3b82f6;
+  color: #c4e0ff;
+}
+
+.btn-outline:hover {
+  background: rgba(59,130,246,0.2);
+  border-color: #60a5fa;
+}
+
+/* Botones de etapas */
+.submenu-etapas button {
+  background: transparent;
+  border: none;
+  color: #90b4e0;
+  padding: 0.5rem 1.2rem;
+  border-radius: 40px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.submenu-etapas button:hover {
+  background: rgba(59, 130, 246, 0.3);
+  color: white;
+}
+
+.submenu-etapas button.active {
+  background: #2c6e9e;
+  color: white;
+}
+
+/* Botón Simular */
+.btn-simular {
+  background: linear-gradient(95deg, #136b9c, #0a4468);
+  border: none;
+  border-radius: 40px;
+  padding: 0.6rem 1rem;
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.btn-simular:hover {
+  background: linear-gradient(95deg, #1a7fb8, #0f5580);
+}
+
+/* Botones Hero */
+.btn-hero {
+  padding: 0.75rem 1.8rem;
+  border-radius: 40px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* ============================================ */
+/* ETIQUETAS DE OBJETOS (BOLENOIDE, IMÁN, ETC) */
+/* TAMAÑO DE LETRA AUMENTADO */
+/* ============================================ */
+.tool-label {
+  font-size: 11px;
+  font-weight: 600;
+}
+
+label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  width: 14px;
+  height: 14px;
+  accent-color: #2b9eff;
+  cursor: pointer;
+}
+
+.footer-meta {
+  text-align: center;
+  font-size: 0.65rem;
+  color: #6c8db0;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border-top: 1px solid rgba(72,187,255,0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 1rem;
+  }
+  
+  .hero h1 {
+    font-size: 1.3rem;
+  }
+  
+  .sim-layout {
+    flex-direction: column;
+  }
+  
+  .toolbar-pro {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+    border-right: none;
+    border-bottom: 1px solid rgba(59,130,246,0.3);
+    padding: 0.6rem;
+  }
+  
+  .tool-btn-pro {
+    flex-direction: row;
+    gap: 8px;
+    padding: 0.4rem 0.8rem;
+  }
+  
+  .tool-icon {
+    font-size: 18px;
+  }
+  
+  .tool-label {
+    font-size: 10px;
+  }
+  
+  .control-panel {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .stats-grid {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  
+  .card-content {
+    padding: 0.2rem 1rem 1rem 1rem;
+  }
+  
+  .card-header {
+    padding: 1rem 1rem 0.2rem 1rem;
+  }
+}
+
+/* Scrollbar personalizada */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a1220;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2c6e9e;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4b9fd1;
+}

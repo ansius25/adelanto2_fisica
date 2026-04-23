@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>ElectroLab | Transferencia Inalámbrica</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <!-- MathJax para fórmulas matemáticas bonitas -->
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: radial-gradient(circle at 10% 20%, #0b1120, #04080f);
+      font-family: 'Inter', sans-serif;
+      color: #eef2ff;
+      line-height: 1.5;
+      min-height: 100vh;
+    }
+
+    /* Fondo con imagen de ecuaciones de Maxwell */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('https://st2.depositphotos.com/1722785/5364/i/450/depositphotos_53647955-stock-photo-blue-electromagnetic-field.jpg');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 1.15;
+      z-index: -2;
+    }
+
+    /* Overlay oscuro para mejorar legibilidad */
+    body::after {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+       .hero {
+      background: rgba(8, 18, 30, 0.65);
+      backdrop-filter: blur(6px);
+      border-radius: 2rem;
+      padding: 3rem 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      border: 1px solid rgba(72, 187, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #FFFFFF, #7bc9ff, #2b9eff);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-subtitle {
+      font-size: 1.2rem;
+      color: #c4e0ff;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-description {
+      font-size: 0.95rem;
+      color: #a0b8d4;
+      max-width: 600px;
+      margin: 0 auto 2rem auto;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-hero {
+      padding: 0.75rem 1.8rem;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: linear-gradient(95deg, #136b9c, #0a4468);
+      border: none;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(95deg, #1a7fb8, #0f5580);
+      transform: translateY(-2px);
+    }
+
+    .btn-outline-hero {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #2b9eff;
+      color: #7bc9ff;
+    }
+
+    .btn-outline-hero:hover {
+      background: rgba(43, 158, 255, 0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Hero-sub más transparente */
+    .hero-sub {
+      background: rgba(5, 12, 20, 0.6);
+      backdrop-filter: blur(6px);
+      border-radius: 80px;
+      padding: 0.5rem 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+
+    .chip-lab {
+      background: rgba(0, 212, 255, 0.15);
+      padding: 0.3rem 1rem;
+      border-radius: 60px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(0, 180, 255, 0.4);
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.5rem;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      border-radius: 80px;
+      padding: 0.3rem;
+    }
+
+    .nav-tabs a {
+      color: #ccdeff;
+      text-decoration: none;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-weight: 500;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .nav-tabs a:hover, .nav-tabs a.active {
+      background: #2c6e9e;
+      color: white;
+    }
+
+    /* Cards más transparentes */
+    .card {
+      background: rgba(8, 18, 30, 0.65);
+      backdrop-filter: blur(6px);
+      border-radius: 1.5rem;
+      border: 1px solid rgba(72, 187, 255, 0.25);
+      margin-bottom: 1.5rem;
+    }
+
+    .card-header {
+      border-left: 4px solid #2b9eff;
+      padding: 1rem 1.5rem;
+    }
+
+    .card-header h2 {
+      font-size: 1.2rem;
+      color: #eef5ff;
+    }
+
+    .card-header p {
+      color: #90b4e0;
+      font-size: 0.8rem;
+      margin-top: 0.3rem;
+    }
+
+    .card-content {
+      padding: 0 1.5rem 1.5rem 1.5rem;
+    }
+
+    /* Autores */
+    .autores-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem;
+      justify-content: center;
+      margin-top: 1rem;
+    }
+
+    .perfil-card {
+      background: rgba(8, 18, 30, 0.65);
+      backdrop-filter: blur(6px);
+      border-radius: 1.2rem;
+      padding: 1rem;
+      text-align: center;
+      width: 220px;
+      border: 1px solid rgba(59, 130, 246, 0.4);
+      transition: transform 0.2s;
+    }
+
+    .perfil-card:hover {
+      transform: translateY(-4px);
+      border-color: #2b9eff;
+    }
+
+    .foto-placeholder {
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #1e3a5f, #0f2b44);
+      border-radius: 50%;
+      margin: 0 auto 0.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      border: 2px solid #2b9eff;
+    }
+
+    .perfil-card h4 {
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+      color: #e2f0ff;
+    }
+
+    .perfil-card p {
+      font-size: 0.7rem;
+      color: #90b4e0;
+    }
+
+    /* Submenú de etapas */
+    .submenu-etapas {
+      background: rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(4px);
+      border-radius: 60px;
+      padding: 0.3rem;
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .submenu-etapas button {
+      background: transparent;
+      border: none;
+      color: #90b4e0;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .submenu-etapas button:hover {
+      background: rgba(59, 130, 246, 0.3);
+      color: white;
+    }
+
+    .submenu-etapas button.active {
+      background: #2c6e9e;
+      color: white;
+    }
+
+    .etapa-contenido {
+      display: none;
+    }
+
+    .etapa-contenido.active {
+      display: block;
+    }
+
+    .etapa-body {
+      padding: 0.5rem 0;
+    }
+
+    .etapa-body h3 {
+      color: #7bc9ff;
+      margin-bottom: 0.8rem;
+      font-size: 1.1rem;
+      border-left: 3px solid #7bc9ff;
+      padding-left: 0.8rem;
+    }
+
+    .etapa-body h4 {
+      color: #ffd966;
+      font-size: 1rem;
+      margin: 1rem 0 0.5rem 0;
+    }
+
+    .etapa-body p, .etapa-body li {
+      font-size: 0.85rem;
+      color: #cbd5e6;
+      line-height: 1.5;
+    }
+
+    /* Tarjetas de fórmulas */
+    .formula-card {
+      background: rgba(5, 15, 30, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid rgba(59, 130, 246, 0.5);
+      transition: transform 0.2s, border-color 0.2s;
+    }
+
+    .formula-card:hover {
+      border-color: #2b9eff;
+      transform: translateY(-2px);
+    }
+
+    .formula-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #90b4e0;
+      margin-bottom: 0.5rem;
+    }
+
+    .formula-content {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1rem;
+      text-align: center;
+      padding: 0.5rem;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 0.6rem;
+      margin: 0.5rem 0;
+      color: #7bc9ff;
+    }
+
+    .formula-example {
+      font-size: 0.75rem;
+      color: #a0b8d4;
+      text-align: center;
+      margin-top: 0.5rem;
+      padding-top: 0.5rem;
+      border-top: 1px dashed rgba(59, 130, 246, 0.3);
+    }
+
+    /* Simulador Python */
+    .python-simulator {
+      background: rgba(5, 12, 25, 0.7);
+      backdrop-filter: blur(4px);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 1rem 0;
+      border: 1px solid #2b9eff;
+    }
+
+    .python-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      align-items: center;
+    }
+
+    .python-controls label {
+      font-size: 0.8rem;
+      color: #90b4e0;
+    }
+
+    .python-controls input {
+      background: #0a1424;
+      border: 1px solid #2b9eff;
+      border-radius: 8px;
+      padding: 0.3rem 0.6rem;
+      color: #7bc9ff;
+      width: 70px;
+    }
+
+    .python-controls button {
+      background: linear-gradient(95deg, #136b9c, #0a4468);
+      border: none;
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      color: white;
+      font-weight: 600;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .python-output {
+      background: rgba(3, 7, 15, 0.8);
+      border-radius: 0.6rem;
+      padding: 0.8rem;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.7rem;
+      color: #4ade80;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+
+    .python-graph canvas {
+      max-width: 100%;
+      background: #0a1424;
+      border-radius: 0.6rem;
+      margin-top: 0.5rem;
+    }
+
+    /* Tabla */
+    .param-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.8rem 0;
+      font-size: 0.8rem;
+    }
+
+    .param-table th, .param-table td {
+      border: 1px solid rgba(72, 187, 255, 0.3);
+      padding: 0.6rem;
+      text-align: left;
+    }
+
+    .param-table th {
+      background: rgba(59, 130, 246, 0.2);
+      color: #7bc9ff;
+    }
+
+    /* Gráfico de barras */
+    .grafico-container {
+      background: rgba(5, 12, 25, 0.65);
+      backdrop-filter: blur(4px);
+      border-radius: 1rem;
+      padding: 1rem;
+      margin: 0.8rem 0;
+    }
+
+    .grafico-barra {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin: 0.6rem 0;
+    }
+
+    .grafico-label {
+      width: 70px;
+      font-size: 0.75rem;
+      color: #90b4e0;
+    }
+
+    .grafico-barra-fill {
+      height: 22px;
+      background: linear-gradient(90deg, #2b9eff, #60a5fa);
+      border-radius: 12px;
+    }
+
+    .progress-bar {
+      background: #1a2a3e;
+      border-radius: 20px;
+      height: 6px;
+      margin: 0.6rem 0;
+    }
+
+    .progress-fill {
+      background: #2b9eff;
+      height: 100%;
+      border-radius: 20px;
+    }
+
+    .badge-completado {
+      background: #0f3b2c;
+      color: #4ade80;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      display: inline-block;
+    }
+
+    .badge-pendiente {
+      background: #3d2a0a;
+      color: #fbbf24;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      font-size: 0.65rem;
+      display: inline-block;
+    }
+
+    .btn-simular {
+      background: linear-gradient(95deg, #136b9c, #0a4468);
+      border: none;
+      border-radius: 40px;
+      padding: 0.6rem 1rem;
+      color: white;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    /* Footer más transparente */
+    .footer-meta {
+      text-align: center;
+      font-size: 0.65rem;
+      color: #6c8db0;
+      margin-top: 1rem;
+      padding: 1.5rem;
+      background: rgba(8, 18, 30, 0.6);
+      backdrop-filter: blur(6px);
+      border-radius: 1.5rem;
+      border-top: 1px solid rgba(72, 187, 255, 0.2);
+    }
+
+    .footer-meta a {
+      color: #7bc9ff;
+      text-decoration: none;
+    }
+
+    .footer-meta a:hover {
+      text-decoration: underline;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @media (max-width: 768px) {
+      .app-container {
+        padding: 1rem;
+      }
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+      .hero-subtitle {
+        font-size: 1rem;
+      }
+      .submenu-etapas {
+        flex-wrap: wrap;
+      }
+      .submenu-etapas button {
+        flex: 1;
+        text-align: center;
+        font-size: 0.7rem;
+        padding: 0.4rem 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+  <!-- NUEVO HERO con diseño tipo portada -->
+  <div class="hero">
+    <h1>SISTEMA DE TRANSFERENCIA<br>INALÁMBRICA DE ENERGÍA</h1>
+    <div class="hero-subtitle">por Acoplamiento Inductivo</div>
+    <div class="hero-description">
+      Innovación sin cables para la industria del futuro
+    </div>
+    <div class="hero-buttons">
+      <a href="#descripcion" class="btn-hero btn-primary" id="conoceBtn">📖 Conoce el Proyecto</a>
+      <a href="#desarrollo" class="btn-hero btn-outline-hero" id="avancesBtn">🚀 Ver Avances</a>
+    </div>
+  </div>
+
+  <div class="hero-sub">
+    <div class="chip-lab">🧲 Acoplamiento Inductivo · Simulación</div>
+    <div class="nav-tabs">
+      <a class="tab-link" data-tab="autores">👥 AUTORES</a>
+      <a class="tab-link" data-tab="descripcion">📖 DESCRIPCIÓN</a>
+      <a class="tab-link active" data-tab="desarrollo">🚀 DESARROLLO</a>
+      <a href="index.html">🔬 LABORATORIO</a>
+    </div>
+  </div>
+
+  <!-- AUTORES -->
+  <div id="autores" class="card tab-content">
+  <div class="card-header">
+    <h2>👥 EL EQUIPO INVESTIGADOR</h2>
+    <p>Estudiantes detrás de esta propuesta de innovación</p>
+  </div>
+  <div class="card-content">
+    <div class="autores-grid">
+      
+      <!-- Andres Mauricio Robayo -->
+      <div class="perfil-card">
+        <div class="foto-placeholder">
+          <img src="img/andres.jpeg" alt="Andres Mauricio Robayo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        </div>
+        <h4>Andres Mauricio Robayo Vargas</h4>
+        <p>Ingeniería en Sistemas y Computación</p>
+      </div>
+      
+      <div class="perfil-card">
+        <div class="foto-placeholder">
+          <img src="img/miguel.jpeg" alt="Miguel Angel Caleño" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+        </div>
+        <h4>Miguel Angel Caleño Garcia</h4>
+        <p>Ingeniería en Sistemas y Computación</p>
+      </div>
+    </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESCRIPCIÓN -->
+  <div id="descripcion" class="tab-content">
+    <div class="card">
+      <div class="card-header">
+        <h2>📖 DESCRIPCIÓN DEL PROYECTO</h2>
+      </div>
+      <div class="card-content">
+        <h3 style="color: #7bc9ff; margin-bottom: 0.8rem;">⚡ Transferencia Inalámbrica de Energía por Acoplamiento Inductivo</h3>
+        <p>La corriente alterna en la bobina transmisora genera un campo magnético que induce un voltaje en la bobina receptora, basado en la <strong>Ley de Faraday</strong> y la <strong>Ley de Ampère</strong>.</p>
+        <p style="margin-top: 0.8rem;">El proyecto incluye diseño, simulación y análisis de un sistema a pequeña escala para dispositivos de baja potencia.</p>
+        <div style="background: rgba(0,212,255,0.1); border-radius: 1rem; padding: 1rem; margin-top: 1rem;">
+          <p><strong>🎯 Objetivo:</strong> Comprender la transferencia inalámbrica y comprobar su desempeño mediante simulaciones, identificando ventajas como reducción de cableado y menor mantenimiento.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DESARROLLO (con etapa 1 y 2 completas) -->
+  <div id="desarrollo" class="tab-content active">
+    <div class="card">
+      <div class="card-header">
+        <h2>🚀 DESARROLLO DEL PROYECTO</h2>
+        <p>Seleccione una etapa para ver su contenido</p>
+      </div>
+      <div class="card-content">
+        <div class="submenu-etapas">
+          <button class="etapa-btn" data-etapa="etapa1">📄 Etapa 1 · Información</button>
+          <button class="etapa-btn active" data-etapa="etapa2">⚙️ Etapa 2 · Implementación F. Intermedia</button>
+          <button class="etapa-btn" data-etapa="etapa3">🎯 Etapa 3 · Implementación Definitiva</button>
+        </div>
+
+        <!-- ETAPA 1 (contenido resumido pero completo) -->
+        <div id="etapa1" class="etapa-contenido">
+          <div class="etapa-body">
+            <h3>📄 REPORTE 1 · Fundamentos de Electromagnetismo</h3>
+            
+            <div class="formula-card">
+              <div class="formula-title">🧲 CAMPO MAGNÉTICO (Ley de Biot-Savart)</div>
+              <div class="formula-content">\[ B = \mu_0 \frac{N I}{l} \]</div>
+            </div>
+            
+            <div class="formula-card">
+              <div class="formula-title">🔧 FUERZA ELECTROMAGNÉTICA</div>
+              <div class="formula-content">\[ F = \frac{\mu_0 N^2 I^2 A}{2 g^2} \]</div>
+              <div class="formula-example">N=250, I=3.5A → F = 0.481 N (49 gramos)</div>
+            </div>
+
+            <div class="python-simulator">
+              <div class="python-controls">
+                <label>🔢 N espiras:</label>
+                <input type="number" id="pyN" min="50" max="500" value="250" step="10">
+                <label>⚡ I (A):</label>
+                <input type="number" id="pyI" min="0" max="5" value="3.5" step="0.1">
+                <button id="runPython">▶ Ejecutar</button>
+              </div>
+              <div id="pythonOutput" class="python-output">Cargando simulador...</div>
+              <canvas id="forceCanvas" width="600" height="400" style="max-width:100%; background:#0a1424; border-radius:0.6rem;"></canvas>
+            </div>
+            
+            <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+            <span class="badge-completado">✓ COMPLETADO</span>
+          </div>
+        </div>
+
+        <!-- ETAPA 2 (activa por defecto) -->
+        <div id="etapa2" class="etapa-contenido active">
+          <div class="etapa-body">
+            <h3>⚙️ Modelos Matemáticos y Reporte de Cálculos</h3>
+            
+            <div class="formula-card">
+              <div class="formula-title">🎯 CAMPO MAGNÉTICO</div>
+              <div class="formula-content">\[ B = \mu_0 \cdot \frac{N}{L} \cdot I \]</div>
+              <div class="formula-example">N=1000, L=0.5m, I=2A → B = 5.03 mT</div>
+            </div>
+            
+            <div class="formula-card">
+              <div class="formula-title">🔺 FLUJO MAGNÉTICO</div>
+              <div class="formula-content">\[ \Phi_B = B \cdot A \cdot \cos(\theta) \]</div>
+              <div class="formula-example">B=5.03mT, A=10⁻⁴m² → Φ = 5.03×10⁻⁷ Wb</div>
+            </div>
+            
+            <div class="formula-card">
+              <div class="formula-title">🚀 LEY DE FARADAY</div>
+              <div class="formula-content">\[ \varepsilon = -N \cdot \frac{d\Phi_B}{dt} \]</div>
+              <div class="formula-example">N=500, dΦ/dt=7.1×10⁻⁵ → ε = -35.5 mV</div>
+            </div>
+            
+            <div class="formula-card">
+              <div class="formula-title">🔄 COEFICIENTE DE ACOPLAMIENTO</div>
+              <div class="formula-content">\[ k = \frac{M}{\sqrt{L_1 L_2}} \]</div>
+              <div class="formula-example">k = 0.5 (rango típico 0.3-0.7)</div>
+            </div>
+            
+            <div class="formula-card">
+              <div class="formula-title">📊 EFICIENCIA DE TRANSFERENCIA</div>
+              <div class="formula-content">\[ \eta = \frac{k^2 Q_1 Q_2}{1 + k^2 Q_1 Q_2} \times 100\% \]</div>
+              <div class="formula-example">k=0.5, Q=80 → η ≈ 99.4% (teórico)</div>
+            </div>
+            
+            <div class="formula-card">
+              <div class="formula-title">⚡ POTENCIA TRANSFERIDA</div>
+              <div class="formula-content">\[ P_{salida} = \frac{V_{entrada}^2 \cdot k^2 \cdot Q_2}{2 \omega L_1} \]</div>
+              <div class="formula-example">V=12V, k=0.5, Q=80 → P ≈ 22.9 W</div>
+            </div>
+
+            <table class="param-table">
+              <thead><tr><th>Parámetro</th><th>Valor</th></tr></thead>
+              <tbody>
+                <tr><td>N espiras (N₁, N₂)</td><td>500</td></tr>
+                <tr><td>Inductancia (L₁, L₂)</td><td>50 µH</td></tr>
+                <tr><td>Coeficiente acoplamiento (k)</td><td>0.5</td></tr>
+                <tr><td>Frecuencia (f)</td><td>20 kHz</td></tr>
+                <tr><td>Factor calidad (Q)</td><td>80</td></tr>
+              </tbody>
+            </table>
+
+            <div class="grafico-container">
+              <div class="grafico-barra"><span class="grafico-label">d = 1 cm</span><div class="grafico-barra-fill" style="width:85%"></div><span>85%</span></div>
+              <div class="grafico-barra"><span class="grafico-label">d = 2 cm</span><div class="grafico-barra-fill" style="width:65%"></div><span>65%</span></div>
+              <div class="grafico-barra"><span class="grafico-label">d = 3 cm</span><div class="grafico-barra-fill" style="width:45%"></div><span>45%</span></div>
+              <div class="grafico-barra"><span class="grafico-label">d = 5 cm</span><div class="grafico-barra-fill" style="width:25%"></div><span>25%</span></div>
+            </div>
+
+            <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
+            <span class="badge-completado">✓ 90% COMPLETADO</span>
+            <button class="btn-simular" onclick="window.open('index.html', '_blank')">🔬 Abrir Simulación</button>
+        </div>
+
+        <!-- ETAPA 3 -->
+        <div id="etapa3" class="etapa-contenido">
+          <div class="etapa-body">
+            <h3>🎯 Implementación Definitiva</h3>
+            <div style="text-align:center; padding:2rem; background:rgba(0,0,0,0.3); border-radius:1rem;">
+              <h3 style="color:#fbbf24;">📅 Próximamente: Mayo 23</h3>
+              <p>Construcción física del prototipo, pruebas industriales, mediciones de eficiencia.</p>
+              <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
+              <span class="badge-pendiente">⏳ PENDIENTE</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LABORATORIO -->
+  <div id="simulador" class="tab-content">
+    <div class="card">
+      <div class="card-header"><h2>🔬 LABORATORIO INTERACTIVO</h2></div>
+      <div class="card-content" style="text-align:center; padding:2rem;">
+        <div style="font-size:4rem;">🔌</div>
+        <p>El laboratorio interactivo estará disponible en un enlace independiente.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-meta">
+    <p>Física II · Universidad Tecnológica de Pereira · Transferencia Inalámbrica por Acoplamiento Inductivo</p>
+  </div>
+</div>
+
+<script>
+  // TABS PRINCIPALES
+  const tabs = document.querySelectorAll('.tab-link');
+  const contents = document.querySelectorAll('.tab-content');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', function(e) {
+      const tabId = this.getAttribute('data-tab');
+      if (this.classList.contains('lab-inactivo')) {
+        alert('El laboratorio estará disponible próximamente en un enlace separado.');
+        return;
+      }
+      contents.forEach(content => content.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      tabs.forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Botones del hero
+  document.getElementById('conoceBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('[data-tab="descripcion"]').click();
+  });
+  document.getElementById('avancesBtn')?.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector('[data-tab="desarrollo"]').click();
+  });
+
+  // SUBMENÚ ETAPAS
+  const etapaBtns = document.querySelectorAll('.etapa-btn');
+  const etapasContenido = document.querySelectorAll('.etapa-contenido');
+
+  etapaBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const etapaId = this.getAttribute('data-etapa');
+      etapaBtns.forEach(b => b.classList.remove('active'));
+      this.classList.add('active');
+      etapasContenido.forEach(c => c.classList.remove('active'));
+      document.getElementById(etapaId).classList.add('active');
+    });
+  });
+
+  // SIMULADOR PYTHON
+  const mu0 = 4 * Math.PI * 1e-7;
+  const A = 1e-4;
+  const g = 0.01;
+
+  function calcularFuerza(N, I) {
+    return (mu0 * Math.pow(N, 2) * Math.pow(I, 2) * A) / (2 * Math.pow(g, 2));
+  }
+
+  function dibujarGrafica(N) {
+    const canvas = document.getElementById('forceCanvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const width = canvas.width = 600;
+    const height = canvas.height = 400;
+    
+    ctx.clearRect(0, 0, width, height);
+    ctx.fillStyle = '#0a1424';
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.strokeStyle = '#2b9eff';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(60, height - 40);
+    ctx.lineTo(width - 30, height - 40);
+    ctx.moveTo(60, height - 40);
+    ctx.lineTo(60, 20);
+    ctx.stroke();
+    
+    ctx.fillStyle = '#90b4e0';
+    ctx.font = '10px monospace';
+    ctx.fillText('Corriente I (A)', width/2 - 40, height - 15);
+    ctx.save();
+    ctx.translate(25, height/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('Fuerza F (N)', -20, 0);
+    ctx.restore();
+    
+    const puntos = [];
+    let maxF = 0;
+    for (let i = 0; i <= 5; i += 0.05) {
+      const f = calcularFuerza(N, i);
+      puntos.push({ I: i, F: f });
+      if (f > maxF) maxF = f;
+    }
+    
+    const xScale = (width - 90) / 5;
+    const yScale = (height - 60) / (maxF + 0.1);
+    
+    ctx.beginPath();
+    ctx.strokeStyle = '#7bc9ff';
+    ctx.lineWidth = 2.5;
+    let first = true;
+    for (const p of puntos) {
+      const x = 60 + p.I * xScale;
+      const y = height - 40 - p.F * yScale;
+      if (first) { ctx.moveTo(x, y); first = false; }
+      else ctx.lineTo(x, y);
+    }
+    ctx.stroke();
+    
+    const I3_5 = 3.5;
+    const F3_5 = calcularFuerza(N, I3_5);
+    const x3_5 = 60 + I3_5 * xScale;
+    const y3_5 = height - 40 - F3_5 * yScale;
+    ctx.fillStyle = '#ffaa44';
+    ctx.beginPath();
+    ctx.arc(x3_5, y3_5, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillStyle = '#ffaa44';
+    ctx.fillText(`(${I3_5}A, ${F3_5.toFixed(3)}N)`, x3_5 + 8, y3_5 - 5);
+  }
+
+  function ejecutarSimulacion() {
+    const N = parseInt(document.getElementById('pyN')?.value || 250);
+    const I = parseFloat(document.getElementById('pyI')?.value || 3.5);
+    const F = calcularFuerza(N, I);
+    const masa = (F / 9.81) * 1000;
+    const output = document.getElementById('pythonOutput');
+    if (output) {
+      output.innerHTML = `📊 RESULTADOS<br>Electroimán de ${N} espiras<br>Corriente: ${I} A<br>Fuerza: ${F.toFixed(4)} N (${(F*1000).toFixed(1)} mN)<br>Masa: ${masa.toFixed(1)} gramos`;
+    }
+    dibujarGrafica(N);
+  }
+
+  const runBtn = document.getElementById('runPython');
+  if (runBtn) {
+    runBtn.addEventListener('click', ejecutarSimulacion);
+    document.getElementById('pyN')?.addEventListener('change', ejecutarSimulacion);
+    document.getElementById('pyI')?.addEventListener('change', ejecutarSimulacion);
+    ejecutarSimulacion();
+  }
+</script>
+<div class="footer-meta">
+  <div style="margin-bottom: 0.5rem;">
+    <span style="font-size: 0.9rem; font-weight: 700; background: linear-gradient(135deg, #7bc9ff, #2b9eff); background-clip: text; -webkit-background-clip: text; color: transparent;">AnsiusCompany</span>
+  </div>
+  <p style="font-size: 0.7rem; color: #90b4e0;">Proyecto académico de simulaciónes de fenomenos fisicos del Electromagnetismo<br>Creado para la asignatura de Física II</p>
+  <div style="margin: 0.5rem 0; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.7rem;">
+    <span>📧 <a href="mailto:andres.robayo@utp.edu.co" style="color: #7bc9ff; text-decoration: none;">andres.robayo@utp.edu.co</a></span>
+    <span>📧 <a href="mailto:miguel.caleno1@utp.edu.co" style="color: #7bc9ff; text-decoration: none;">miguel.caleno1@utp.edu.co</a></span>
+  </div>
+  <p style="font-size: 0.6rem; color: #6c8db0;">© 2026 AnsiusCompany. Todos los derechos reservados.</p>
+</div>
+</body>
+</html>
