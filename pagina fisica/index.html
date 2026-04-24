@@ -6,7 +6,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>ElectroLab | Transferencia Inalámbrica</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <!-- MathJax para fórmulas matemáticas bonitas -->
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" id="MathJax-script" async></script>
   <style>
     * {
@@ -23,7 +22,6 @@
       min-height: 100vh;
     }
 
-    /* Fondo con imagen de ecuaciones de Maxwell */
     body::before {
       content: "";
       position: fixed;
@@ -39,7 +37,6 @@
       z-index: -2;
     }
 
-    /* Overlay oscuro para mejorar legibilidad */
     body::after {
       content: "";
       position: fixed;
@@ -59,7 +56,7 @@
       z-index: 1;
     }
 
-       .hero {
+    .hero {
       background: rgba(8, 18, 30, 0.65);
       backdrop-filter: blur(6px);
       border-radius: 2rem;
@@ -134,7 +131,6 @@
       transform: translateY(-2px);
     }
 
-    /* Hero-sub más transparente */
     .hero-sub {
       background: rgba(5, 12, 20, 0.6);
       backdrop-filter: blur(6px);
@@ -181,7 +177,6 @@
       color: white;
     }
 
-    /* Cards más transparentes */
     .card {
       background: rgba(8, 18, 30, 0.65);
       backdrop-filter: blur(6px);
@@ -210,7 +205,6 @@
       padding: 0 1.5rem 1.5rem 1.5rem;
     }
 
-    /* Autores */
     .autores-grid {
       display: flex;
       flex-wrap: wrap;
@@ -246,6 +240,7 @@
       justify-content: center;
       font-size: 2.5rem;
       border: 2px solid #2b9eff;
+      overflow: hidden;
     }
 
     .perfil-card h4 {
@@ -259,7 +254,6 @@
       color: #90b4e0;
     }
 
-    /* Submenú de etapas */
     .submenu-etapas {
       background: rgba(0, 0, 0, 0.35);
       backdrop-filter: blur(4px);
@@ -312,19 +306,6 @@
       padding-left: 0.8rem;
     }
 
-    .etapa-body h4 {
-      color: #ffd966;
-      font-size: 1rem;
-      margin: 1rem 0 0.5rem 0;
-    }
-
-    .etapa-body p, .etapa-body li {
-      font-size: 0.85rem;
-      color: #cbd5e6;
-      line-height: 1.5;
-    }
-
-    /* Tarjetas de fórmulas */
     .formula-card {
       background: rgba(5, 15, 30, 0.7);
       backdrop-filter: blur(4px);
@@ -332,12 +313,6 @@
       padding: 1rem;
       margin: 1rem 0;
       border: 1px solid rgba(59, 130, 246, 0.5);
-      transition: transform 0.2s, border-color 0.2s;
-    }
-
-    .formula-card:hover {
-      border-color: #2b9eff;
-      transform: translateY(-2px);
     }
 
     .formula-title {
@@ -368,7 +343,6 @@
       border-top: 1px dashed rgba(59, 130, 246, 0.3);
     }
 
-    /* Simulador Python */
     .python-simulator {
       background: rgba(5, 12, 25, 0.7);
       backdrop-filter: blur(4px);
@@ -422,14 +396,6 @@
       overflow-y: auto;
     }
 
-    .python-graph canvas {
-      max-width: 100%;
-      background: #0a1424;
-      border-radius: 0.6rem;
-      margin-top: 0.5rem;
-    }
-
-    /* Tabla */
     .param-table {
       width: 100%;
       border-collapse: collapse;
@@ -448,7 +414,6 @@
       color: #7bc9ff;
     }
 
-    /* Gráfico de barras */
     .grafico-container {
       background: rgba(5, 12, 25, 0.65);
       backdrop-filter: blur(4px);
@@ -520,7 +485,6 @@
       margin-top: 1rem;
     }
 
-    /* Footer más transparente */
     .footer-meta {
       text-align: center;
       font-size: 0.65rem;
@@ -551,18 +515,10 @@
     }
 
     @media (max-width: 768px) {
-      .app-container {
-        padding: 1rem;
-      }
-      .hero h1 {
-        font-size: 1.5rem;
-      }
-      .hero-subtitle {
-        font-size: 1rem;
-      }
-      .submenu-etapas {
-        flex-wrap: wrap;
-      }
+      .app-container { padding: 1rem; }
+      .hero h1 { font-size: 1.5rem; }
+      .hero-subtitle { font-size: 1rem; }
+      .submenu-etapas { flex-wrap: wrap; }
       .submenu-etapas button {
         flex: 1;
         text-align: center;
@@ -574,7 +530,6 @@
 </head>
 <body>
 <div class="app-container">
-  <!-- NUEVO HERO con diseño tipo portada -->
   <div class="hero">
     <h1>SISTEMA DE TRANSFERENCIA<br>INALÁMBRICA DE ENERGÍA</h1>
     <div class="hero-subtitle">por Acoplamiento Inductivo</div>
@@ -597,37 +552,32 @@
     </div>
   </div>
 
-  <!-- AUTORES -->
   <div id="autores" class="card tab-content">
-  <div class="card-header">
-    <h2>👥 EL EQUIPO INVESTIGADOR</h2>
-    <p>Estudiantes detrás de esta propuesta de innovación</p>
-  </div>
-  <div class="card-content">
-    <div class="autores-grid">
-      
-      <!-- Andres Mauricio Robayo -->
-      <div class="perfil-card">
-        <div class="foto-placeholder">
-          <img src="img/andres.jpeg" alt="Andres Mauricio Robayo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-        </div>
-        <h4>Andres Mauricio Robayo Vargas</h4>
-        <p>Ingeniería en Sistemas y Computación</p>
-      </div>
-      
-      <div class="perfil-card">
-        <div class="foto-placeholder">
-          <img src="img/miguel.jpeg" alt="Miguel Angel Caleño" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
-        </div>
-        <h4>Miguel Angel Caleño Garcia</h4>
-        <p>Ingeniería en Sistemas y Computación</p>
-      </div>
+    <div class="card-header">
+      <h2>👥 EL EQUIPO INVESTIGADOR</h2>
+      <p>Estudiantes detrás de esta propuesta de innovación</p>
     </div>
+    <div class="card-content">
+      <div class="autores-grid">
+        <div class="perfil-card">
+          <div class="foto-placeholder">
+            <img src="img/andres.jpeg" alt="Andres Mauricio Robayo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          </div>
+          <h4>Andres Mauricio Robayo Vargas</h4>
+          <p>Ingeniería en Sistemas y Computación</p>
+        </div>
+
+        <div class="perfil-card">
+          <div class="foto-placeholder">
+            <img src="img/miguel.jpeg" alt="Miguel Angel Caleño" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+          </div>
+          <h4>Miguel Angel Caleño Garcia</h4>
+          <p>Ingeniería en Sistemas y Computación</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- DESCRIPCIÓN -->
   <div id="descripcion" class="tab-content">
     <div class="card">
       <div class="card-header">
@@ -644,7 +594,6 @@
     </div>
   </div>
 
-  <!-- DESARROLLO (con etapa 1 y 2 completas) -->
   <div id="desarrollo" class="tab-content active">
     <div class="card">
       <div class="card-header">
@@ -658,22 +607,18 @@
           <button class="etapa-btn" data-etapa="etapa3">🎯 Etapa 3 · Implementación Definitiva</button>
         </div>
 
-        <!-- ETAPA 1 (contenido resumido pero completo) -->
         <div id="etapa1" class="etapa-contenido">
           <div class="etapa-body">
             <h3>📄 REPORTE 1 · Fundamentos de Electromagnetismo</h3>
-            
             <div class="formula-card">
               <div class="formula-title">🧲 CAMPO MAGNÉTICO (Ley de Biot-Savart)</div>
               <div class="formula-content">\[ B = \mu_0 \frac{N I}{l} \]</div>
             </div>
-            
             <div class="formula-card">
               <div class="formula-title">🔧 FUERZA ELECTROMAGNÉTICA</div>
               <div class="formula-content">\[ F = \frac{\mu_0 N^2 I^2 A}{2 g^2} \]</div>
               <div class="formula-example">N=250, I=3.5A → F = 0.481 N (49 gramos)</div>
             </div>
-
             <div class="python-simulator">
               <div class="python-controls">
                 <label>🔢 N espiras:</label>
@@ -685,47 +630,39 @@
               <div id="pythonOutput" class="python-output">Cargando simulador...</div>
               <canvas id="forceCanvas" width="600" height="400" style="max-width:100%; background:#0a1424; border-radius:0.6rem;"></canvas>
             </div>
-            
             <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
             <span class="badge-completado">✓ COMPLETADO</span>
           </div>
         </div>
 
-        <!-- ETAPA 2 (activa por defecto) -->
         <div id="etapa2" class="etapa-contenido active">
           <div class="etapa-body">
             <h3>⚙️ Modelos Matemáticos y Reporte de Cálculos</h3>
-            
             <div class="formula-card">
               <div class="formula-title">🎯 CAMPO MAGNÉTICO</div>
               <div class="formula-content">\[ B = \mu_0 \cdot \frac{N}{L} \cdot I \]</div>
               <div class="formula-example">N=1000, L=0.5m, I=2A → B = 5.03 mT</div>
             </div>
-            
             <div class="formula-card">
               <div class="formula-title">🔺 FLUJO MAGNÉTICO</div>
               <div class="formula-content">\[ \Phi_B = B \cdot A \cdot \cos(\theta) \]</div>
               <div class="formula-example">B=5.03mT, A=10⁻⁴m² → Φ = 5.03×10⁻⁷ Wb</div>
             </div>
-            
             <div class="formula-card">
               <div class="formula-title">🚀 LEY DE FARADAY</div>
               <div class="formula-content">\[ \varepsilon = -N \cdot \frac{d\Phi_B}{dt} \]</div>
               <div class="formula-example">N=500, dΦ/dt=7.1×10⁻⁵ → ε = -35.5 mV</div>
             </div>
-            
             <div class="formula-card">
               <div class="formula-title">🔄 COEFICIENTE DE ACOPLAMIENTO</div>
               <div class="formula-content">\[ k = \frac{M}{\sqrt{L_1 L_2}} \]</div>
               <div class="formula-example">k = 0.5 (rango típico 0.3-0.7)</div>
             </div>
-            
             <div class="formula-card">
               <div class="formula-title">📊 EFICIENCIA DE TRANSFERENCIA</div>
               <div class="formula-content">\[ \eta = \frac{k^2 Q_1 Q_2}{1 + k^2 Q_1 Q_2} \times 100\% \]</div>
               <div class="formula-example">k=0.5, Q=80 → η ≈ 99.4% (teórico)</div>
             </div>
-            
             <div class="formula-card">
               <div class="formula-title">⚡ POTENCIA TRANSFERIDA</div>
               <div class="formula-content">\[ P_{salida} = \frac{V_{entrada}^2 \cdot k^2 \cdot Q_2}{2 \omega L_1} \]</div>
@@ -753,16 +690,15 @@
             <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
             <span class="badge-completado">✓ 90% COMPLETADO</span>
             <button class="btn-simular" onclick="window.open('simulacion-electroiman-completo-bobina.html', '_blank')">🔬 Abrir Simulación</button>
+          </div>
         </div>
 
-        <!-- ETAPA 3 -->
         <div id="etapa3" class="etapa-contenido">
-          <div id="etapa3" class="etapa-contenido active"></div>
           <div class="etapa-body">
             <h3>🎯 Implementación Definitiva</h3>
             <div style="text-align:center; padding:2rem; background:rgba(0,0,0,0.3); border-radius:1rem;">
               <h3 style="color:#fbbf24;">📅 Próximamente: Mayo 23</h3>
-              <p>Construcción física del prototipo, pruebas industriales, mediciones de eficiencia.</p>
+              <p>¡Pronto habrán mas simuladores!</p>
               <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
               <span class="badge-pendiente">⏳ PENDIENTE</span>
             </div>
@@ -772,7 +708,6 @@
     </div>
   </div>
 
-  <!-- LABORATORIO -->
   <div id="simulador" class="tab-content">
     <div class="card">
       <div class="card-header"><h2>🔬 LABORATORIO INTERACTIVO</h2></div>
@@ -789,12 +724,11 @@
 </div>
 
 <script>
-  // TABS PRINCIPALES
   const tabs = document.querySelectorAll('.tab-link');
   const contents = document.querySelectorAll('.tab-content');
 
   tabs.forEach(tab => {
-    tab.addEventListener('click', function(e) {
+    tab.addEventListener('click', function() {
       const tabId = this.getAttribute('data-tab');
       if (this.classList.contains('lab-inactivo')) {
         alert('El laboratorio estará disponible próximamente en un enlace separado.');
@@ -807,17 +741,16 @@
     });
   });
 
-  // Botones del hero
   document.getElementById('conoceBtn')?.addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('[data-tab="descripcion"]').click();
   });
+
   document.getElementById('avancesBtn')?.addEventListener('click', (e) => {
     e.preventDefault();
     document.querySelector('[data-tab="desarrollo"]').click();
   });
 
-  // SUBMENÚ ETAPAS
   const etapaBtns = document.querySelectorAll('.etapa-btn');
   const etapasContenido = document.querySelectorAll('.etapa-contenido');
 
@@ -831,7 +764,6 @@
     });
   });
 
-  // SIMULADOR PYTHON
   const mu0 = 4 * Math.PI * 1e-7;
   const A = 1e-4;
   const g = 0.01;
@@ -846,11 +778,11 @@
     const ctx = canvas.getContext('2d');
     const width = canvas.width = 600;
     const height = canvas.height = 400;
-    
+
     ctx.clearRect(0, 0, width, height);
     ctx.fillStyle = '#0a1424';
     ctx.fillRect(0, 0, width, height);
-    
+
     ctx.strokeStyle = '#2b9eff';
     ctx.lineWidth = 1.5;
     ctx.beginPath();
@@ -859,7 +791,7 @@
     ctx.moveTo(60, height - 40);
     ctx.lineTo(60, 20);
     ctx.stroke();
-    
+
     ctx.fillStyle = '#90b4e0';
     ctx.font = '10px monospace';
     ctx.fillText('Corriente I (A)', width/2 - 40, height - 15);
@@ -868,7 +800,7 @@
     ctx.rotate(-Math.PI/2);
     ctx.fillText('Fuerza F (N)', -20, 0);
     ctx.restore();
-    
+
     const puntos = [];
     let maxF = 0;
     for (let i = 0; i <= 5; i += 0.05) {
@@ -876,10 +808,10 @@
       puntos.push({ I: i, F: f });
       if (f > maxF) maxF = f;
     }
-    
+
     const xScale = (width - 90) / 5;
     const yScale = (height - 60) / (maxF + 0.1);
-    
+
     ctx.beginPath();
     ctx.strokeStyle = '#7bc9ff';
     ctx.lineWidth = 2.5;
@@ -891,7 +823,7 @@
       else ctx.lineTo(x, y);
     }
     ctx.stroke();
-    
+
     const I3_5 = 3.5;
     const F3_5 = calcularFuerza(N, I3_5);
     const x3_5 = 60 + I3_5 * xScale;
