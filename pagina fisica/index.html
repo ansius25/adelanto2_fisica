@@ -687,23 +687,78 @@
               <div class="grafico-barra"><span class="grafico-label">d = 5 cm</span><div class="grafico-barra-fill" style="width:25%"></div><span>25%</span></div>
             </div>
 
-            <div class="progress-bar"><div class="progress-fill" style="width: 90%"></div></div>
-            <span class="badge-completado">✓ 90% COMPLETADO</span>
+            <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+            <span class="badge-completado">✓ COMPLETADO</span>
             <button class="btn-simular" onclick="window.open('simulacion-electroiman-completo-bobina.html', '_blank')">🔬 Abrir Simulación</button>
           </div>
         </div>
 
         <div id="etapa3" class="etapa-contenido">
-          <div class="etapa-body">
-            <h3>🎯 Implementación Definitiva</h3>
-            <div style="text-align:center; padding:2rem; background:rgba(0,0,0,0.3); border-radius:1rem;">
-              <h3 style="color:#fbbf24;">📅 Próximamente: Mayo 23</h3>
-              <p>¡Pronto habrán mas simuladores!</p>
-              <div class="progress-bar"><div class="progress-fill" style="width:15%"></div></div>
-              <span class="badge-pendiente">⏳ PENDIENTE</span>
-            </div>
-          </div>
+  <div class="etapa-body">
+    <h3>🎯 Implementación Definitiva</h3>
+
+    <div style="margin-top:1rem; padding:1.2rem; background:linear-gradient(180deg, rgba(10,20,32,.96), rgba(6,12,20,.96)); border:1px solid rgba(255,255,255,.08); border-radius:1rem; color:#eaf4ff; line-height:1.65;">
+      <h3 style="color:#fbbf24; margin-bottom:.8rem;">⚡ Ley de Faraday</h3>
+
+      <p style="margin-bottom:1rem;">
+        La ley de Faraday explica cómo un <strong>cambio en el flujo magnético</strong> que atraviesa una espira o bobina genera una fuerza electromotriz, conocida como <strong>fem inducida</strong>. Ese fenómeno se llama <strong>inducción electromagnética</strong>. [web:49][web:51][web:55]
+      </p>
+
+      <div style="background:rgba(251,191,36,.08); border-left:4px solid #fbbf24; padding:1rem; border-radius:.75rem; margin-bottom:1rem;">
+        <div style="font-size:1.05rem; font-weight:800; color:#fde68a;">Fórmula principal</div>
+        <div style="font-size:1.2rem; margin-top:.4rem; font-weight:800; color:#fff;">
+          \(\varepsilon = -\frac{d\Phi}{dt}\)
         </div>
+        <div style="margin-top:.35rem; color:#cfe3f7;">
+          Si la bobina tiene \(N\) vueltas, la expresión queda:
+          \(\varepsilon = -N \frac{d\Phi}{dt}\). [web:49][web:55][web:54]
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(240px,1fr)); gap:1rem; margin-bottom:1rem;">
+        <div style="background:rgba(255,255,255,.05); padding:1rem; border-radius:.9rem;">
+          <div style="font-weight:800; color:#93c5fd; margin-bottom:.35rem;">Flujo magnético</div>
+          <p>Es la cantidad de campo magnético que atraviesa una superficie. Depende de la intensidad del campo, del área y del ángulo de incidencia. [web:49][web:55]</p>
+        </div>
+
+        <div style="background:rgba(255,255,255,.05); padding:1rem; border-radius:.9rem;">
+          <div style="font-weight:800; color:#93c5fd; margin-bottom:.35rem;">Ley de Lenz</div>
+          <p>El signo negativo indica que la corriente inducida se opone al cambio que la produce. Por eso la bobina “resiste” el movimiento del imán. [web:54][web:56][web:57]</p>
+        </div>
+
+        <div style="background:rgba(255,255,255,.05); padding:1rem; border-radius:.9rem;">
+          <div style="font-weight:800; color:#93c5fd; margin-bottom:.35rem;">Más vueltas, más fem</div>
+          <p>Si la bobina tiene más espiras, cada vuelta aporta fem y el efecto total aumenta. Esto es clave en transformadores y generadores. [web:49][web:54][web:57]</p>
+        </div>
+      </div>
+
+      <h4 style="font-size:1.05rem; color:#fcd34d; margin:1rem 0 .5rem;">Cómo funciona</h4>
+      <ul style="padding-left:1.2rem; display:grid; gap:.55rem;">
+        <li>Si el imán se acerca o se aleja de la bobina, el flujo magnético cambia y aparece voltaje inducido. [web:49][web:51][web:55]</li>
+        <li>Si el imán se mueve más rápido, el cambio de flujo por segundo es mayor y la fem inducida aumenta. [web:50][web:55][web:57]</li>
+        <li>Si giras el imán o cambias su orientación respecto a la bobina, también cambia el flujo y se genera inducción. [web:52][web:55]</li>
+        <li>La corriente inducida siempre intenta oponerse al cambio, según la ley de Lenz. [web:54][web:56][web:57]</li>
+      </ul>
+
+      <h4 style="font-size:1.05rem; color:#fcd34d; margin:1rem 0 .5rem;">Aplicaciones</h4>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:.8rem;">
+        <div style="background:rgba(59,130,246,.12); padding:.9rem; border-radius:.85rem;">Generadores eléctricos</div>
+        <div style="background:rgba(59,130,246,.12); padding:.9rem; border-radius:.85rem;">Transformadores</div>
+        <div style="background:rgba(59,130,246,.12); padding:.9rem; border-radius:.85rem;">Cargadores inalámbricos</div>
+        <div style="background:rgba(59,130,246,.12); padding:.9rem; border-radius:.85rem;">Cocinas de inducción</div>
+      </div>
+
+      <h4 style="font-size:1.05rem; color:#fcd34d; margin:1rem 0 .5rem;">Ejemplo rápido</h4>
+      <p>
+        Si pasas un imán por una bobina lentamente, el voltaje es pequeño. Si lo pasas rápido, el cambio de flujo es mayor y el voltímetro marca más. Ese es exactamente el comportamiento que quieres simular. [web:49][web:55][web:57]
+      </p>
+    </div>
+
+    <div class="progress-bar"><div class="progress-fill" style="width: 100%"></div></div>
+            <span class="badge-completado">✓ COMPLETADO</span>
+    </div>
+  </div>
+</div>
       </div>
     </div>
   </div>

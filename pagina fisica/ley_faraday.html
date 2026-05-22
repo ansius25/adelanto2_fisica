@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <link rel="icon" type="image/png" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJP4RW-4eSZP8zz97zuZnpfcYlPVPb11BEeg&s">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>ElectroLab Pro · Ley de Faraday Avanzada</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+
+    :root {
+      --bg-app: #060b13;
+      --panel-bg: #0d1527;
+      --panel-border: rgba(58, 130, 247, 0.2);
+      --accent: #3a82f7;
+      --accent-glow: rgba(58, 130, 247, 0.4);
+      --text: #f1f5f9;
+      --text-muted: #94a3b8;
+      --shadow: 0 20px 40px rgba(0,0,0,0.5);
+    }
+
+    body {
+      background-color: var(--bg-app);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(26, 41, 74, 0.5) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(15, 23, 42, 0.8) 0px, transparent 50%);
+      font-family: 'Inter', sans-serif;
+      color: var(--text);
+      min-height: 100vh;
+      padding: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 1440px;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* --- ESTILOS HERO COMPARTIDOS (PRIMER CÓDIGO) --- */
+    .hero {
+      background: rgba(13, 21, 39, 0.6);
+      border: 1px solid var(--panel-border);
+      border-radius: 1.5rem;
+      padding: 1.5rem 2rem;
+      backdrop-filter: blur(12px);
+      box-shadow: var(--shadow);
+    }
+
+    .hero h1 {
+      font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+      font-weight: 800;
+      letter-spacing: .05em;
+      background: linear-gradient(to right, #fff, #93c5fd);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .hero-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(6, 11, 19, 0.7);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 99px;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .chip-lab {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: #7bc9ff;
+    }
+
+    .nav-tabs {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-tabs a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 0.4rem 1rem;
+      border-radius: 99px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .nav-tabs a:hover {
+      background: rgba(58, 130, 247, 0.1);
+      border-color: var(--accent);
+      color: #93c5fd;
+    }
+
+    .nav-tabs a.active {
+      background: var(--accent);
+      border-color: transparent;
+      color: white;
+      box-shadow: 0 0 10px var(--accent-glow);
+    }
+
+    /* --- FIN ESTILOS HERO --- */
+
+    .sim-card {
+      background: var(--panel-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 1.25rem;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .sim-layout {
+      display: flex;
+      flex-wrap: wrap;
+    }
+
+    .sidebar-left {
+      width: 280px;
+      background: rgba(10, 16, 30, 0.7);
+      border-right: 1px solid rgba(255,255,255,0.05);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    .panel-control {
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+
+    .panel-control h3 {
+      font-size: .75rem;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .toggle-group {
+      display: flex;
+      flex-direction: column;
+      gap: .75rem;
+    }
+
+    .toggle-item {
+      display: flex;
+      align-items: center;
+      gap: .6rem;
+      font-size: .9rem;
+      cursor: pointer;
+    }
+
+    .toggle-item input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--accent);
+      cursor: pointer;
+    }
+
+    .bobinas-selector {
+      display: flex;
+      gap: .5rem;
+    }
+
+    .btn {
+      background: #1e293b;
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: .75rem 1rem;
+      border-radius: .75rem;
+      color: var(--text);
+      font-weight: 600;
+      font-size: .85rem;
+      cursor: pointer;
+      width: 100%;
+      transition: all .2s ease;
+    }
+
+    .btn:hover {
+      background: #334155;
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .btn.active {
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent-glow);
+      border-color: transparent;
+    }
+
+    .flip-btn {
+      background: linear-gradient(135deg, #6366f1, #4f46e5);
+      color: white;
+      border: none;
+    }
+    .flip-btn:hover {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+    }
+
+    .reset-btn {
+      background: #ef4444;
+      border: none;
+      margin-top: auto;
+    }
+    .reset-btn:hover {
+      background: #dc2626;
+    }
+
+    .sensibilidad-slider input {
+      width: 100%;
+      accent-color: var(--accent);
+      background: #1e293b;
+      height: 6px;
+      border-radius: 3px;
+      outline: none;
+    }
+
+    .valor-speed {
+      font-size: .8rem;
+      color: var(--text-muted);
+      margin-top: .4rem;
+      text-align: right;
+    }
+
+    .stage {
+      flex: 1;
+      position: relative;
+      background: #040811;
+      min-height: 650px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+      cursor: grab;
+    }
+
+    canvas.dragging {
+      cursor: grabbing;
+    }
+
+    .stats-externos {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+
+    .stat-card {
+      background: rgba(13, 21, 39, 0.6);
+      border: 1px solid var(--panel-border);
+      border-radius: 1rem;
+      padding: 1.2rem;
+      backdrop-filter: blur(10px);
+    }
+
+    .stat-label {
+      font-size: .75rem;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: #fff;
+      margin-top: .4rem;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stat-card.active-glow .stat-value {
+      color: #fbbf24;
+      text-shadow: 0 0 10px rgba(251, 191, 36, 0.4);
+    }
+
+    .footer-hint {
+      text-align: center;
+      font-size: .85rem;
+      color: var(--text-muted);
+      padding: .5rem;
+    }
+
+    /* --- ESTILOS FOOTER DE CONTROL --- */
+    .footer-meta {
+      text-align: center;
+      margin-top: 1rem;
+    }
+
+    @media (max-width: 1024px) {
+      .sidebar-left { width: 100%; }
+      .stats-externos { grid-template-columns: repeat(2, 1fr); }
+    }
+    /* Imagen de fondo */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('https://st2.depositphotos.com/1722785/5364/i/450/depositphotos_53647955-stock-photo-blue-electromagnetic-field.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 1.35;
+  z-index: -2;
+}
+  </style>
+</head>
+
+<body>
+<div class="app">
+  
+  <div class="hero">
+    <h1>⚡ ELECTROLAB · LEY DE FARADAY</h1>
+    <div class="hero-sub">
+      <div class="chip-lab">🔬 Ley de Faraday · Simulación Avanzada</div>
+      <div class="nav-tabs">
+        <a href="index.html">🔄 Volver a inicio</a>
+        <a href="#" class="active">🧲 Ley de Faraday</a>
+        <a href="simulacion-electroiman-completo-bobina.html">📡 Transferencia Inalámbrica</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="sim-card">
+    <div class="sim-layout">
+      <div class="sidebar-left">
+        <div class="panel-control">
+          <h3>📟 Óptica de Laboratorio</h3>
+          <div class="toggle-group">
+            <label class="toggle-item">
+              <input type="checkbox" id="toggleVoltmeter" checked>
+              Mostrar Voltímetro Analógico
+            </label>
+            <label class="toggle-item">
+              <input type="checkbox" id="toggleFieldLines" checked>
+              Mostrar Líneas de Campo Magnético
+            </label>
+          </div>
+        </div>
+
+        <div class="panel-control">
+          <h3>🌀 Geometría de Inducción</h3>
+          <div class="bobinas-selector">
+            <button id="btnBobinaUna" class="btn active">1 Bobina</button>
+            <button id="btnBobinaDos" class="btn">2 Bobinas</button>
+          </div>
+          <button id="flipPolesBtn" class="btn flip-btn">🔁 Invertir Polos (N/S)</button>
+        </div>
+
+        <div class="panel-control">
+          <h3>🚀 Reactividad del Medio</h3>
+          <div class="sensibilidad-slider">
+            <input type="range" id="speedSensitivity" min="1" max="15" value="8">
+            <div class="valor-speed" id="sensValorDisplay">Ganancia: x8</div>
+          </div>
+        </div>
+
+        <button id="resetExperimentBtn" class="btn reset-btn">⟳ Reiniciar Sistema</button>
+      </div>
+
+      <div class="stage">
+        <canvas id="simCanvas" width="1100" height="680"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="stats-externos">
+    <div class="stat-card" id="cardVoltaje">
+      <div class="stat-label">F.E.M. Inducida (Voltaje)</div>
+      <div class="stat-value" id="voltajeInducido">0.00 V</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Flujo Magnético (Φ)</div>
+      <div class="stat-value" id="flujoMagnetico">0.00 Wb</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Velocidad Relativa</div>
+      <div class="stat-value" id="velocidadValor">0.00 m/s</div>
+    </div>
+    <div class="stat-card" id="cardBombillo">
+      <div class="stat-label">Estado de Carga</div>
+      <div class="stat-value" id="bombilloEstado">⚫ Apagado</div>
+    </div>
+  </div>
+
+  <div class="footer-meta" style="border-top: 1px solid rgba(255,255,255,0.05); padding-top: 1rem;">
+    <div style="margin-bottom: 0.5rem;">
+      <span style="font-size: 0.9rem; font-weight: 700; background: linear-gradient(135deg, #7bc9ff, #2b9eff); background-clip: text; -webkit-background-clip: text; color: transparent;">AnsiusCompany</span>
+    </div>
+    <p style="font-size: 0.7rem; color: #90b4e0;">Proyecto académico de simulaciónes de fenomenos fisicos del Electromagnetismo<br>Creado para la asignatura de Física II</p>
+    <div style="margin: 0.5rem 0; display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; font-size: 0.7rem;">
+      <span>📧 <a href="mailto:andres.robayo@utp.edu.co" style="color: #7bc9ff; text-decoration: none;">andres.robayo@utp.edu.co</a></span>
+      <span>📧 <a href="mailto:m.caleno@utp.edu.co" style="color: #7bc9ff; text-decoration: none;">m.caleno@utp.edu.co</a></span>
+    </div>
+    <p style="font-size: 0.6rem; color: #6c8db0;">© 2026 AnsiusCompany. Todos los derechos reservados.</p>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('simCanvas');
+const ctx = canvas.getContext('2d');
+
+// Componentes UI
+const toggleVoltmeter = document.getElementById('toggleVoltmeter');
+const toggleFieldLines = document.getElementById('toggleFieldLines');
+const voltajeSpan = document.getElementById('voltajeInducido');
+const flujoSpan = document.getElementById('flujoMagnetico');
+const velocidadSpan = document.getElementById('velocidadValor');
+const bombilloText = document.getElementById('bombilloEstado');
+const sensSlider = document.getElementById('speedSensitivity');
+const sensDisplay = document.getElementById('sensValorDisplay');
+const cardVoltaje = document.getElementById('cardVoltaje');
+const cardBombillo = document.getElementById('cardBombillo');
+
+// Estados e Instancias
+let twoCoilsMode = false;
+let animTime = 0;
+let smoothVoltage = 0;
+
+const magnet = {
+  x: 850,
+  y: 340,
+  w: 160,
+  h: 48,
+  vx: 0,
+  vy: 0,
+  prevX: 850,
+  prevY: 340,
+  dragging: false,
+  flipped: false
+};
+
+// Ubicaciones de las bobinas en el espacio de simulación
+const coils = [
+  { id: 'main', x: 650, y: 420, rx: 45, ry: 90, turns: 6, color: '#d97706', active: true },
+  { id: 'sec', x: 650, y: 220, rx: 35, ry: 70, turns: 4, color: '#b45309', active: false }
+];
+
+// Nodos fijos del circuito (Bornes de los componentes)
+const bulb = { x: 220, y: 240, r: 30, intensity: 0 };
+const voltmeterNode = { x: 220, y: 460, w: 160, h: 110 };
+
+// Captura de Eventos Mouse/Tactil para Dragging óptimo
+function getMousePos(e) {
+  const rect = canvas.getBoundingClientRect();
+  return {
+    x: (e.clientX - rect.left) * (canvas.width / rect.width),
+    y: (e.clientY - rect.top) * (canvas.height / rect.height)
+  };
+}
+
+canvas.addEventListener('mousedown', e => {
+  const pos = getMousePos(e);
+  if (pos.x > magnet.x - magnet.w/2 && pos.x < magnet.x + magnet.w/2 &&
+      pos.y > magnet.y - magnet.h/2 && pos.y < magnet.y + magnet.h/2) {
+    magnet.dragging = true;
+    canvas.classList.add('dragging');
+  }
+});
+
+window.addEventListener('mouseup', () => {
+  magnet.dragging = false;
+  canvas.classList.remove('dragging');
+});
+
+window.addEventListener('mousemove', e => {
+  if (!magnet.dragging) return;
+  const pos = getMousePos(e);
+  
+  // Amortiguación y cálculo inercial de la velocidad
+  magnet.vx = (pos.x - magnet.x) * 0.4;
+  magnet.vy = (pos.y - magnet.y) * 0.4;
+  magnet.x = pos.x;
+  magnet.y = pos.y;
+});
+
+// Controladores de Interfaz
+document.getElementById('btnBobinaUna').onclick = () => {
+  twoCoilsMode = false;
+  coils[1].active = false;
+  document.getElementById('btnBobinaUna').classList.add('active');
+  document.getElementById('btnBobinaDos').classList.remove('active');
+};
+
+document.getElementById('btnBobinaDos').onclick = () => {
+  twoCoilsMode = true;
+  coils[1].active = true;
+  document.getElementById('btnBobinaDos').classList.add('active');
+  document.getElementById('btnBobinaUna').classList.remove('active');
+};
+
+document.getElementById('flipPolesBtn').onclick = () => { magnet.flipped = !magnet.flipped; };
+document.getElementById('resetExperimentBtn').onclick = () => {
+  magnet.x = 850; magnet.y = 340; magnet.vx = 0; magnet.vy = 0;
+  smoothVoltage = 0;
+};
+
+// --- MOTOR DE RENDERIZADO VECTORIAL ---
+
+function drawWires() {
+  ctx.save();
+  ctx.lineWidth = 4;
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  // Cable de Fondo Neutro / Retorno Común (Negro/Azul Oscuro)
+  ctx.strokeStyle = '#1e293b';
+  ctx.beginPath();
+  ctx.moveTo(bulb.x - 20, bulb.y + bulb.r);
+  ctx.lineTo(bulb.x - 20, voltmeterNode.y);
+  ctx.stroke();
+
+  // Bornes de salida del bloque de carga/medida
+  const outBulbX = bulb.x + 20;
+  const outBulbY = bulb.y + 15;
+  const outVoltX = voltmeterNode.x + voltmeterNode.w/2;
+  const outVoltY = voltmeterNode.y + 30;
+
+  // Renderizar cables vivos (Cobre con brillo según voltaje)
+  const factorVolt = Math.min(Math.abs(smoothVoltage) * 0.15, 1);
+  ctx.strokeStyle = `rgb(${139 + factorVolt * 116}, ${69 + factorVolt * 30}, 19)`; 
+  if (factorVolt > 0.1) {
+    ctx.shadowColor = '#fbbf24';
+    ctx.shadowBlur = factorVolt * 8;
+  }
+
+  ctx.beginPath();
+  if (!twoCoilsMode) {
+    // Configuración 1: Conexión limpia a la bobina principal
+    const c = coils[0];
+    ctx.moveTo(outBulbX, outBulbY);
+    ctx.bezierCurveTo(400, outBulbY, 400, c.y - 30, c.x - c.rx, c.y - 30);
+    
+    ctx.moveTo(outVoltX, outVoltY);
+    ctx.bezierCurveTo(400, outVoltY, 400, c.y + 30, c.x - c.rx, c.y + 30);
+  } else {
+    // Configuración 2: Conexión Serie Inteligente que une ambas bobinas de forma limpia
+    const cTop = coils[1];
+    const cBot = coils[0];
+
+    // Del bombillo a la parte superior de la bobina de arriba
+    ctx.moveTo(outBulbX, outBulbY);
+    ctx.bezierCurveTo(400, outBulbY, 400, cTop.y - 25, cTop.x - cTop.rx, cTop.y - 25);
+
+    // Puente serie entre ambas bobinas
+    ctx.moveTo(cTop.x - cTop.rx, cTop.y + 25);
+    ctx.bezierCurveTo(cTop.x - cTop.rx - 40, cTop.y + 40, cBot.x - cBot.rx - 40, cBot.y - 40, cBot.x - cBot.rx, cBot.y - 25);
+
+    // De la bobina inferior al Voltímetro
+    ctx.moveTo(outVoltX, outVoltY);
+    ctx.bezierCurveTo(400, outVoltY, 400, cBot.y + 25, cBot.x - cBot.rx, cBot.y + 25);
+  }
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawFieldLines() {
+  if (!toggleFieldLines.checked) return;
+
+  ctx.save();
+  const speed = Math.hypot(magnet.vx, magnet.vy);
+  // Las líneas se vuelven más energizadas (blancas/doradas) con la velocidad
+  const intensity = Math.min(speed * 0.1, 1);
+  ctx.strokeStyle = `rgba(${135 + intensity * 120}, ${180 + intensity * 75}, 255, ${0.25 + intensity * 0.3})`;
+  ctx.lineWidth = 1.5;
+
+  const numLines = 5;
+  for (let i = 0; i < numLines; i++) {
+    const scaleY = 0.2 + (i * 0.25); 
+    const extX = 120 + (i * 40);
+
+    ctx.beginPath();
+    // Lóbulo izquierdo del campo magnético
+    ctx.bezierCurveTo(
+      magnet.x - magnet.w/2, magnet.y,
+      magnet.x - magnet.w/2 - extX, magnet.y - magnet.w * scaleY,
+      magnet.x, magnet.y - magnet.w * scaleY
+    );
+    ctx.bezierCurveTo(
+      magnet.x + magnet.w/2 + extX, magnet.y - magnet.w * scaleY,
+      magnet.x + magnet.w/2, magnet.y,
+      magnet.x + magnet.w/2, magnet.y
+    );
+    // Lóbulo simétrico inferior
+    ctx.bezierCurveTo(
+      magnet.x + magnet.w/2 + extX, magnet.y + magnet.w * scaleY,
+      magnet.x, magnet.y + magnet.w * scaleY,
+      magnet.x - magnet.w/2 - extX, magnet.y + magnet.w * scaleY
+    );
+    ctx.closePath();
+    ctx.stroke();
+  }
+  ctx.restore();
+}
+
+// Dibuja las bobinas segmentadas matemáticamente en dos mitades (Z-Indexing perfecto)
+function drawCoilSegment(coil, segment) {
+  if (!coil.active) return;
+  ctx.save();
+  
+  const vFactor = Math.min(Math.abs(smoothVoltage) * 0.1, 1);
+  ctx.lineWidth = 7;
+  
+  // Reacción galvánica del cobre al paso de corriente
+  ctx.strokeStyle = coil.color;
+  ctx.shadowColor = '#f59e0b';
+  ctx.shadowBlur = vFactor * 15;
+
+  const startAngle = segment === 'back' ? Math.PI * 1.5 : Math.PI * 0.5;
+  const endAngle = segment === 'back' ? Math.PI * 0.5 : Math.PI * 1.5;
+
+  // Dibujar las espiras ordenadas con desfase de profundidad horizontal
+  for (let i = 0; i < coil.turns; i++) {
+    const offsetX = (i - (coil.turns - 1) / 2) * 10;
+    ctx.beginPath();
+    ctx.ellipse(coil.x + offsetX, coil.y, coil.rx, coil.ry, 0, startAngle, endAngle, true);
+    ctx.stroke();
+
+    // Capa de brillo metálico central en el hilo conductor
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = `rgba(251, 191, 36, ${0.3 + vFactor * 0.7})`;
+    ctx.beginPath();
+    ctx.ellipse(coil.x + offsetX, coil.y, coil.rx, coil.ry, 0, startAngle, endAngle, true);
+    ctx.stroke();
+    ctx.lineWidth = 7;
+  }
+  ctx.restore();
+}
+
+function drawMagnet() {
+  ctx.save();
+  const x = magnet.x;
+  const y = magnet.y;
+  const w = magnet.w;
+  const h = magnet.h;
+
+  ctx.shadowColor = 'rgba(0,0,0,0.4)';
+  ctx.shadowBlur = 15;
+
+  // Base contenedor con bordes redondeados estilizados
+  ctx.lineJoin = 'round';
+  ctx.lineWidth = 4;
+
+  const leftColor = magnet.flipped ? '#2563eb' : '#dc2626';
+  const rightColor = magnet.flipped ? '#dc2626' : '#2563eb';
+
+  // Gradiente Polo Izquierdo
+  let g1 = ctx.createLinearGradient(x - w/2, y, x, y);
+  g1.addColorStop(0, leftColor);
+  g1.addColorStop(1, '#991b1b');
+
+  // Gradiente Polo Derecho
+  let g2 = ctx.createLinearGradient(x, y, x + w/2, y);
+  g2.addColorStop(0, '#1e40af');
+  g2.addColorStop(1, rightColor);
+
+  // Render Polo Izquierdo
+  ctx.fillStyle = g1;
+  ctx.beginPath();
+  ctx.roundRect(x - w/2, y - h/2, w/2, h, [8, 0, 0, 8]);
+  ctx.fill();
+
+  // Render Polo Derecho
+  ctx.fillStyle = g2;
+  ctx.beginPath();
+  ctx.roundRect(x, y - h/2, w/2, h, [0, 8, 8, 0]);
+  ctx.fill();
+
+  // Reflejo realista de luz superior
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+  ctx.fillRect(x - w/2 + 4, y - h/2 + 3, w - 8, h * 0.25);
+
+  // Tipografía limpia integrada para los polos norte y sur
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+  ctx.font = 'bold 18px Inter';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(magnet.flipped ? 'S' : 'N', x - w/4, y);
+  ctx.fillText(magnet.flipped ? 'N' : 'S', x + w/4, y);
+
+  ctx.restore();
+}
+
+function drawBulbComponent() {
+  ctx.save();
+  const x = bulb.x;
+  const y = bulb.y;
+  const r = bulb.r;
+
+  // Brillo radial expansivo y volumétrico
+  if (bulb.intensity > 0.01) {
+    let glowGrad = ctx.createRadialGradient(x, y, r * 0.5, x, y, r + 110);
+    glowGrad.addColorStop(0, `rgba(252, 211, 77, ${0.8 * bulb.intensity})`);
+    glowGrad.addColorStop(0.4, `rgba(245, 158, 11, ${0.3 * bulb.intensity})`);
+    glowGrad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = glowGrad;
+    ctx.beginPath();
+    ctx.arc(x, y, r + 110, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  // Base del socket (Metalizado moderno)
+  ctx.fillStyle = '#475569';
+  ctx.fillRect(x - 14, y + r - 4, 28, 16);
+  ctx.fillStyle = '#334155';
+  ctx.fillRect(x - 10, y + r + 12, 20, 6);
+
+  // Cristal de la ampolleta bulbosa
+  let glassGrad = ctx.createRadialGradient(x - r*0.3, y - r*0.3, 5, x, y, r);
+  glassGrad.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
+  glassGrad.addColorStop(1, `rgba(251, 191, 36, ${0.1 + bulb.intensity * 0.6})`);
+  
+  ctx.fillStyle = glassGrad;
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(x, y, r, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Filamento reactivo interno
+  ctx.strokeStyle = bulb.intensity > 0.2 ? '#fef08a' : '#94a3b8';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(x - 8, y + 15);
+  ctx.lineTo(x - 6, y - 5);
+  ctx.lineTo(x + 6, y - 5);
+  ctx.lineTo(x + 8, y + 15);
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+function drawVoltmeterComponent(voltage) {
+  if (!toggleVoltmeter.checked) return;
+  ctx.save();
+  
+  const x = voltmeterNode.x - voltmeterNode.w/2;
+  const y = voltmeterNode.y;
+  const w = voltmeterNode.w;
+  const h = voltmeterNode.h;
+
+  // Chasis del Instrumento de medición
+  ctx.fillStyle = '#1e293b';
+  ctx.strokeStyle = varProp('--panel-border');
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.roundRect(x, y, w, h, 12);
+  ctx.fill();
+  ctx.stroke();
+
+  // Pantalla analógica arqueada
+  ctx.fillStyle = '#0f172a';
+  ctx.beginPath();
+  ctx.roundRect(x + 10, y + 10, w - 20, h - 20, 6);
+  ctx.fill();
+
+  // Línea del Arco de Escala
+  ctx.strokeStyle = '#334155';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(x + w/2, y + h - 15, 75, Math.PI, 0);
+  ctx.stroke();
+
+  // Marcador de Cero Central
+  ctx.fillStyle = '#64748b';
+  ctx.font = '10px Inter';
+  ctx.textAlign = 'center';
+  ctx.fillText('-V', x + 30, y + h - 25);
+  ctx.fillText('0', x + w/2, y + 25);
+  ctx.fillText('+V', x + w - 30, y + h - 25);
+
+  // Física de la aguja: Mapeo angular restringido y suavizado
+  const maxDeflection = Math.PI * 0.4; // Límite de deflexión
+  const clampedVolt = Math.max(-25, Math.min(25, voltage));
+  const angleDeg = (clampedVolt / 25) * maxDeflection;
+  const center針X = x + w/2;
+  const center針Y = y + h - 15;
+
+  ctx.strokeStyle = '#ef4444';
+  ctx.lineWidth = 3;
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  ctx.moveTo(center針X, center針Y);
+  ctx.lineTo(center針X + Math.sin(angleDeg) * 65, center針Y - Math.cos(angleDeg) * 65);
+  ctx.stroke();
+
+  // Eje central pin central
+  ctx.fillStyle = '#cbd5e1';
+  ctx.beginPath();
+  ctx.arc(center針X, center針Y, 6, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function varProp(name) {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
+// --- NÚCLEO MATEMÁTICO Y FÍSICO (Leyes de Faraday y Lenz) ---
+
+function processInductionPhysics() {
+  let totalVoltage = 0;
+  let totalFlux = 0;
+
+  coils.forEach(c => {
+    if (!c.active) return;
+
+    // Distancia geométrica al centroide de la bobina
+    const dx = magnet.x - c.x;
+    const dy = magnet.y - c.y;
+    const dist = Math.hypot(dx, dy);
+
+    // Vector unitario del imán y factor de penetración en el núcleo
+    const coilRadiusH = c.ry;
+    const insideCore = Math.abs(dy) < coilRadiusH && Math.abs(dx) < magnet.w/2;
+
+    // Cálculo del Flujo Estimado
+    const bField = (magnet.flipped ? -1 : 1) * (4000000 / Math.pow(dist + 60, 3));
+    const alignment = Math.max(0, 1 - Math.abs(dy) / (c.ry * 1.5));
+    const flux = bField * (Math.PI * c.rx * c.ry * 0.00001) * alignment;
+
+    // Ley de Faraday
+    const speedX = magnet.vx;
+    const fluxGradient = -3 * flux / (dist + 60) * (dx / (dist + 1));
+    let inducedVolt = c.turns * (fluxGradient * speedX) * parseFloat(sensSlider.value) * 1.8;
+
+    totalFlux += flux;
+    totalVoltage += inducedVolt;
+  });
+
+  // Filtro de paso bajo para suavizar oscilaciones bruscas en la UI
+  smoothVoltage += (totalVoltage - smoothVoltage) * 0.25;
+  if (Math.abs(smoothVoltage) < 0.05) smoothVoltage = 0;
+
+  const currentSpeed = Math.hypot(magnet.vx, magnet.vy);
+  updateExternalAnalytics(smoothVoltage, totalFlux, currentSpeed);
+}
+
+function updateExternalAnalytics(voltage, flux, speed) {
+  voltajeSpan.innerText = `${voltage.toFixed(2)} V`;
+  flujoSpan.innerText = `${(flux * 10).toFixed(3)} Wb`;
+  velocidadSpan.innerText = `${(speed * 0.5).toFixed(2)} m/s`;
+
+  if (Math.abs(voltage) > 0.5) {
+    cardVoltaje.classList.add('active-glow');
+  } else {
+    cardVoltaje.classList.remove('active-glow');
+  }
+
+  let intensity = Math.min(Math.abs(voltage) * 0.12, 1);
+  bulb.intensity = intensity;
+
+  if (intensity > 0.7) {
+    bombilloText.innerText = '🔥 SOBRECARGA';
+    cardBombillo.style.borderColor = '#ef4444';
+  } else if (intensity > 0.2) {
+    bombilloText.innerText = '💡 ENCENDIDO';
+    cardBombillo.style.borderColor = '#fbbf24';
+  } else if (intensity > 0.02) {
+    bombilloText.innerText = '✨ TENUE';
+    cardBombillo.style.borderColor = '#f59e0b';
+  } else {
+    bombilloText.innerText = '⚫ Apagado';
+    cardBombillo.style.borderColor = 'transparent';
+  }
+}
+
+// --- CICLO PRINCIPAL DE ANIMACIÓN (LOOP) ---
+
+function renderLoop() {
+  animTime += 0.016;
+  sensDisplay.innerText = `Ganancia: x${sensSlider.value}`;
+
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  processInductionPhysics();
+
+  drawWires();
+  drawFieldLines();
+  drawBulbComponent();
+  drawVoltmeterComponent(smoothVoltage);
+
+  coils.forEach(c => drawCoilSegment(c, 'back'));
+  drawMagnet();
+  coils.forEach(c => drawCoilSegment(c, 'front'));
+
+  if (!magnet.dragging) {
+    magnet.vx *= 0.88;
+    magnet.vy *= 0.88;
+    magnet.x += magnet.vx;
+    magnet.y += magnet.vy;
+  }
+
+  requestAnimationFrame(renderLoop);
+}
+
+renderLoop();
+</script>
+</body>
+</html>
